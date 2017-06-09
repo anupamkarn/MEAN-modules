@@ -1,0 +1,20 @@
+{
+  "name": "dashboard",
+  "version": "1.0.0",
+  "description": "Admin dashboard for the continous watch on data of alliswell",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.17.2",
+    "ejs": "^2.5.6",
+    "express": "^4.15.3",
+    "jsonwebtoken": "^7.4.1",
+    "mongoose": "^4.10.5",
+    "morgan": "^1.8.2"
+  }
+}
