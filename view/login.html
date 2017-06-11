@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>Admin login</title>
-  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet" type="text/css" href="/style/style.css">
 </head>
 <body>
 <div class="login-page">
@@ -17,10 +17,11 @@
     </form>
    -->
    <p><h1>Dashboard login</h1></p>
-    <form class="login-form">
-      <input type="text" placeholder="email"/>
-      <input type="password" placeholder="password"/>
-      <button>login</button>
+    <form action="./modules/login.js
+    " class="login-form" method="post">
+      <input type="text" placeholder="email" name="email" />
+      <input type="password" placeholder="password" name="password"/>
+      <button type="submit">login</button>
      <!--  <p class="message">Not registered? <a href="#">Create an account</a></p> -->
     </form>
   </div>
