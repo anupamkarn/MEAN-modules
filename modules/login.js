@@ -1,3 +1,4 @@
+"use strict";
 var express = require('express');
 var bodyParser = require('body-parser');
 var supersecret = 'alliswell';
@@ -48,3 +49,22 @@ adminRouter.post('/', function(req, res){
 
 
 });
+function login(req, res, next) {
+	//This is just a dummy implementation for now.
+
+	//TO-DO
+	/*
+	1. Authenticate the user
+	2. If authentication is succuessful, redirect him to campus_list view
+	
+	 */
+	console.log('Login method' + JSON.stringify(req.body));
+	
+	res.json({
+		input: req.body,
+		name: 'sfondfv'
+	});
+}
+module.exports = {
+	login: login
+}
