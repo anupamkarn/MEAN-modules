@@ -3,6 +3,7 @@ var bodyParser = require('body-parser');
 var supersecret = 'alliswell';
 var jwt = require('jsonwebtoken');
 var app = express();
+var campuslist = require('./campuslist');
 
 app.use(bodyParser());
 
@@ -13,10 +14,10 @@ var user = {
 
 var adminRouter = express.Router();
 
-	adminRouter.get('/', function(req, res){
+/*	adminRouter.get('/', function(req, res){
 		res.render('./view/login.html');
 
-	});
+	});*/
 
  /*comparePassword = function(password){
 	var user = this;
@@ -47,9 +48,20 @@ var adminRouter = express.Router();
 						username: user.adminusername
 					}, supersecret, {expiresIn: 60*60*24
 					});
+                    
+                    /*	app.use(campuslist.validtoken)
+                    
+                    if(campuslist.count){*/
 
-					res.render(__dirname + '/view/campuslist.ejs');
+					res.render('C:/Users/Anupam/dashboard/view/campuslist.ejs');
+					/*res.json({
+						success:true,
+						message: 'you got your token',
+						token: token
+					});*/
+
 					console.log(token);
+                
 
 
 				}

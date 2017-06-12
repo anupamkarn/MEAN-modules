@@ -13,7 +13,7 @@ app.get('/', function(req,res)
 	res.sendFile(path.join(__dirname + '/index.html'));
 });*/
 
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({extended: false}));
 
 app.use(function(req, res, next) //CORs request handle, coss origin resourse sharing
 {
@@ -29,15 +29,16 @@ app.set('view engine', 'ejs');
 
 console.log(__dirname);
 app.post('/login', index.checks);
-app.use('/campuslist',campuslist.validtoken);
+/*app.use('/campuslist',campuslist.validtoken);*/
 
 app.get('/', function(req, res, next){
 	res.render(__dirname + '/view/login.ejs')
 });
 
-app.get('/login', function(req,res,next){
+
+/*app.get('/login', function(req,res,next){
 	res.render(__dirname + '/view/campuslist.ejs')
-});
+});*/
 	
 app.listen(port);
 console.log('let see this port works or not');

@@ -1,6 +1,6 @@
 var jwt = require('jsonwebtoken');
 var supersecret = 'alliswell';
-
+var count = 0;
 function validtoken (req, res, next){
 
 	var token = req.body.token || req.param(token) || req.headers['x-access-token'];
@@ -11,12 +11,12 @@ function validtoken (req, res, next){
 			if(err){
 				return res.status(403).send({
 					success: false,
-					message:'Failed to authenticate token'
+					message:'Failed to authenticate token',
 				});
 			}
 			else{
 				req.decded = decoded;
-
+				var count = 1;
 				next();
 			}
 		});
@@ -24,10 +24,15 @@ function validtoken (req, res, next){
 	else{
 		res.status(403).send({
 			success:false,
-			messsage:'token not provided'
+			messsage:'token not provided',
 		});
 	}
   
 };
 
+
+
 module.exports.validtoken = validtoken;
+module.exports = {
+	count: count
+}
