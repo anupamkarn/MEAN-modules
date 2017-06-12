@@ -4,7 +4,6 @@ var supersecret = 'alliswell';
 var jwt = require('jsonwebtoken');
 var app = express();
 
-
 app.use(bodyParser());
 
 var user = {
@@ -14,17 +13,28 @@ var user = {
 
 var adminRouter = express.Router();
 
-adminRouter.get('/',function(req, res){
-	res.render('login');
-});
+	adminRouter.get('/', function(req, res){
+		res.render('./view/login.html');
 
-adminRouter.post('/', function(req, res){
+	});
+
+ /*comparePassword = function(password){
+	var user = this;
+
+	return bcrypt.compareSync(password, user.adminpassword);
+*/	
+
+ function authenticate(req, res) {
+
 	username = req.body.username;
 	password = req.body.password;
 
+	console.log(username);
+	console.log(password);
 
-			var validpassword = user.comparePassword(req.body.password)
-				if(!validpassword || user.adminusername!== req.body.username){
+
+			/*var validpassword = user.comparePassword(req.body.password)*/
+				if( user.adminpassword !== password || user.adminusername !== username){
 					res.json({
 						success:false,
 						message:'Wrong credentials'
@@ -38,13 +48,13 @@ adminRouter.post('/', function(req, res){
 					}, supersecret, {expiresIn: 60*60*24
 					});
 
-					res.json({
-						success: true,
-						message:'Enjoy your token'
-					});
+					res.render(__dirname + '/view/campuslist.ejs');
+					console.log(token);
 
-					res.render('campuslist')
+
 				}
 
 
-});
+};
+
+module.exports.checks = authenticate;
