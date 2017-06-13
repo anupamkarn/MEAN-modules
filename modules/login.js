@@ -5,8 +5,7 @@ var jwt = require('jsonwebtoken');
 var app = express();
 var campuslist = require('./campuslist');
 
-
-app.use(bodyParser());
+// app.use(bodyParser());
 
 var user = {
 	adminusername : "kunal@opensea.co.in",
@@ -54,7 +53,9 @@ var adminRouter = express.Router();
                     
                     if(campuslist.count){*/
                 
-				res.redirect('/campuslist'/*__dirname + '/../view/campuslist.ejs'*/);
+				res.json({
+					token: token
+				})
 					
 
 

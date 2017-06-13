@@ -1,0 +1,81 @@
+<html>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+</head>
+
+<body ng-app="myApp">
+
+    <div ng-controller="myCtrl">
+        <!--<input type = "file" file-model = "myFile"/>
+         <button ng-click = "uploadFile()">upload me</button>-->
+        <form ng-if="!campuses">
+            <input type="text" placeholder="email" name="email" ng-model="vm.username" />
+            <input type="password" placeholder="password" name="password" ng-model="vm.password" />
+            <button type="submit" ng-click="login(vm.username)">login</button>
+        </form>
+
+        <div ng-repeat="campus in campuses">
+            {{campus}}
+        </div>
+    </div>
+
+    <script>
+        var myApp = angular.module('myApp', []);
+         
+         myApp.service('HttpService', ['$http', function ($http) {
+            
+            this.login = function(username, password) {
+                return $http.post('http://localhost:8080/login' , {                 
+                  
+                      username: username,
+                      password: password
+                  
+                }, {headers: {'Content-Type': 'application/json'}})
+                
+                    
+            
+            }
+
+            this.campusList = function(token) {
+                return $http.post('http://localhost:8080/campuslist' , {
+                            token: token                  
+                            }, {headers: {'Content-Type': 'application/json'}});
+                            
+            
+            }
+         }]);
+      
+         myApp.controller('myCtrl', ['$scope', 'HttpService', function($scope, HttpService){
+            $scope.vm = {};
+            $scope.uploadFile = function(){
+               var file = $scope.myFile;
+               
+               console.log('file is ' );
+               console.dir(file);
+               
+               var uploadUrl = "http://localhost:3001/any";
+               HttpService.uploadFileToUrl(file, uploadUrl);
+            };
+            $scope.login = function(username) {
+                 HttpService.login($scope.vm.username, $scope.vm.password).then(function(response) {
+                    console.log(response);
+                    if (response && response.data.token) {
+                        var token = response.data.token;
+                        HttpService.campusList(token).then(function (campusresponse) {
+                            console.log(campusresponse);
+                            if (campusresponse && campusresponse.data) {
+                                $scope.campuses = campusresponse.data.campuses;
+                            }
+                        })
+                    }
+                 });
+                    
+                  
+            }
+         }]);
+    </script>
+
+</body>
+
+</html>
