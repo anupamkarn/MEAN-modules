@@ -5,6 +5,7 @@ var jwt = require('jsonwebtoken');
 var app = express();
 var campuslist = require('./campuslist');
 
+
 app.use(bodyParser());
 
 var user = {
@@ -44,7 +45,7 @@ var adminRouter = express.Router();
 
 				else {
 
-					var token = jwt.sign({
+					  var token = jwt.sign({
 						username: user.adminusername
 					}, supersecret, {expiresIn: 60*60*24
 					});
@@ -52,13 +53,10 @@ var adminRouter = express.Router();
                     /*	app.use(campuslist.validtoken)
                     
                     if(campuslist.count){*/
+                
+				res.redirect('/campuslist'/*__dirname + '/../view/campuslist.ejs'*/);
+					
 
-					res.render('C:/Users/Anupam/dashboard/view/campuslist.ejs');
-					/*res.json({
-						success:true,
-						message: 'you got your token',
-						token: token
-					});*/
 
 					console.log(token);
                 
@@ -70,3 +68,4 @@ var adminRouter = express.Router();
 };
 
 module.exports.checks = authenticate;
+
