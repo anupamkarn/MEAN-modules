@@ -9,6 +9,8 @@ var index = require('./modules/login');
 var campuslist = require('./modules/campuslist');
 var usercampus = require('./modules/usercampus');
 var mongoose = require('mongoose');
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 /*
 app.get('/', function(req,res)
 {
@@ -36,10 +38,10 @@ app.post('/login', index.checks);
 /*app.use('/campuslist',campuslist.validtoken);*/
 
 app.get('/', function(req, res, next){
-	res.render(__dirname + '/view/login.ejs')
+	res.render(__dirname + '/view/angular.ejs')
 });
 
-app.get('/campuslist', campuslist.validtoken/*usercampus.getcampuslist*/);
+app.post('/campuslist', campuslist.validtoken/*usercampus.getcampuslist*/);
 
 /*app.get('/login', function(req,res,next){
 	res.render(__dirname + '/view/campuslist.ejs')

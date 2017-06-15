@@ -5,7 +5,7 @@ function validtoken (req, res, next){
 
 	var token = req.body.token || req.param(token) || req.headers['x-access-token'];
 
-	res.render(__dirname + '/../view/campuslist.ejs');
+	// res.render(__dirname + '/../view/campuslist.ejs');
 
 	if(token){
 			console.log(token);	
@@ -18,6 +18,15 @@ function validtoken (req, res, next){
 			}
 			else{
 				req.decded = decoded;
+				res.json({
+					campuses : [
+						//Dummy list of campuses
+						'Mantri residency',
+						'Mantri Paradise'
+					]
+
+
+				})
 				/*res.render(__dirname + '/../view/campuslist.ejs');*/
 				next();
 			}
