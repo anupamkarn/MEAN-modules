@@ -19,8 +19,6 @@ app.get('/', function(req,res)
 
 mongoose.connect('mongodb://localhost:27017/data/alliswell');
 
-app.use(bodyParser.urlencoded({extended: true}));
-
 app.use(function(req, res, next) //CORs request handle, coss origin resourse sharing
 {
 	res.setHeader('Access-Control-Allow-Origin', '*');

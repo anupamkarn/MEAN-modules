@@ -4,7 +4,6 @@ var supersecret = 'alliswell';
 var jwt = require('jsonwebtoken');
 var app = express();
 var campuslist = require('./campuslist');
-
 // app.use(bodyParser());
 
 var user = {
