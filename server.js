@@ -17,7 +17,9 @@ app.get('/', function(req,res)
 	res.sendFile(path.join(__dirname + '/index.html'));
 });*/
 
-mongoose.connect('mongodb://localhost:27017/data/alliswell');
+mongoose.connect('mongodb://localhost:27017/alliswell');
+
+/*var user1 = new usercampus({ 	name: 'anupam' }); user1.save();*/
 
 app.use(function(req, res, next) //CORs request handle, coss origin resourse sharing
 {

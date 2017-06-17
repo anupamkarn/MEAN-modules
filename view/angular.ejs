@@ -18,7 +18,7 @@
         </form>
 
         <div ng-repeat="campus in campuses">
-            {{campus}}
+            {{campus.name}}
         </div>
     </div>
 
@@ -50,24 +50,24 @@
       
          myApp.controller('myCtrl', ['$scope', 'HttpService', function($scope, HttpService){
             $scope.vm = {};
-            $scope.uploadFile = function(){
+            /*$scope.uploadFile = function(){
                var file = $scope.myFile;
                
                console.log('file is ' );
                console.dir(file);
                
                var uploadUrl = "http://localhost:3001/any";
-               HttpService.uploadFileToUrl(file, uploadUrl);
-            };
+               HttpService.uploadFileToUrl(file, uploadUrl);*/
+            /*};*/
             $scope.login = function(username) {
                  HttpService.login($scope.vm.username, $scope.vm.password).then(function(response) {
-                    console.log(response);
+                    console.log(response);  //comming from login function with token as response
                     if (response && response.data.token) {
                         var token = response.data.token;
                         HttpService.campusList(token).then(function (campusresponse) {
                             console.log(campusresponse);
                             if (campusresponse && campusresponse.data) {
-                                $scope.campuses = campusresponse.data.campuses;
+                                $scope.campuses = campusresponse.data.result;
                             }
                         })
                     }

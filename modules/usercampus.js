@@ -6,10 +6,30 @@ var CampusSchema = new Schema({
 
 }, {
 	collection: 'campus'
-})
+});
 
-var model = mongoose.model('model', CampusSchema);
+var VisitorSchema = new Schema({
+	campusid: String
 
+}, {
+	collection: 'visitorrecords'
+});
+
+var Users = new Schema({
+	campusid: String
+
+}, {
+	collection: 'users'
+});
+
+var Employee = new Schema({
+	campusid: String
+
+}, {
+	collection: 'employees'
+});
+/*var model = mongoose.model('model', CampusSchema);
+*/
 /*function getcampuslist () {
 	res.render('campuslist', {
 		
@@ -18,4 +38,8 @@ var model = mongoose.model('model', CampusSchema);
 }*/
 /*
 module.exports.getcampuslist = getcampuslist;*/
-module.exports = mongoose.model('model', CampusSchema);
+module.exports = {
+	campus: mongoose.model('campus', CampusSchema),
+	visitor: mongoose.model('visitor', VisitorSchema)	
+};
+/*module.exports = mongoose.model('visitor', VisitorSchema);*/

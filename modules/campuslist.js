@@ -50,7 +50,8 @@ module.exports.validtoken = validtoken;*/
 var jwt = require('jsonwebtoken');
 var supersecret = 'alliswell';
 var index = require('./login');
-var model = require('./usercampus');
+var campus = require('./usercampus').campus;
+var visitor = require('./usercampus').visitor;
 function validtoken (req, res, next){
 
 	var token = req.body.token || req.param(token) || req.headers['x-access-token'];
@@ -69,11 +70,47 @@ function validtoken (req, res, next){
 			else{
 				req.decded = decoded;
 				console.log('rendering');
-				model.find().then(function(result){
-					res.json({
-						result: result
-					});
+				var visitorSMR = 1;
+				var visitorMantri = 1;
+				
+				var promise = campus.find().exec();
+				promise.then(function(campuses,){
+					visitor.count.exec();
+					
+					/*console.log(result);*/
+				})
+				.then(forEach(function(visitors){
+	
+					if(visitor.campusid === "5740a2892b22c2a276f7ac28")
+						visitorSMR = visitorSMR + 1;
+					else
+					    visitorMantri = visitorMantri + 1; 
+				}));
+				
+				visitor.find().exec(function(usercount){
+					var count = usercount.lenght;
+					return count
+				})
+				
+				res.json({
+					visitorSMR: visitorSMR,
+					visitorMantri: visitorMantri,
+					users : count
 				});
+			
+				};
+		
+	});
+
+}
+
+}
+
+
+
+
+
+
 				/*res.render(__dirname + '/../view/login.ejs');*/
 				/*res.json({
 					campuses : [
@@ -82,13 +119,11 @@ function validtoken (req, res, next){
 						'Mantri Paradise'
 					]
 
-
+                 
 				})*/
 				/*res.render(__dirname + '/../view/campuslist.ejs');*/
-				next();
-			}
-		});
-	}
+			/*	next();*/
+			
 	/*else{
 		res.status(403).send({
 			success:false,
@@ -96,6 +131,6 @@ function validtoken (req, res, next){
 		});
 	}*/
   
-};
+
 
 module.exports.validtoken = validtoken;
