@@ -8,10 +8,13 @@ var CampusSchema = new Schema({
 	collection: 'campus'
 });
 
-var VisitorSchema = new Schema({
-	campusId: String
-
-}, {
+var VisitorSchema = new Schema({campusId: {
+        type: mongoose.Schema.Types.ObjectId
+        , required: true
+        , ref: 'Campus'
+    }
+}
+, {
 	collection: 'visitorrecords'
 });
 

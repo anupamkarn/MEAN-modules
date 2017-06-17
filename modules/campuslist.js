@@ -52,7 +52,7 @@ var supersecret = 'alliswell';
 var index = require('./login');
 var campus = require('./usercampus').campus;
 var visitor = require('./usercampus').visitor;
-
+var _ = require('lodash');
 
 function validtoken (req, res, next){
 
@@ -77,13 +77,20 @@ function validtoken (req, res, next){
 				
 				var promise = campus.find().exec();
 				promise.then(function(campuses){
-					console.log(campuses);
-					visitor.count().then(function(result) {
-						console.log(result);
+					var promises = [];
+					// console.log(campuses);
+					_.forEach(campuses, (campus) => {
+						promises.push(visitor.count({campusId: campus._id}));
+					});
+					Promise.all(promises).then((results) => {
+						console.log(results);
+						res.json({
+							result: campuses,
+							count: results
+						})
 					})
-					 res.json({
-						 result: campuses
-					 })
+					
+					 
 					
 					
 					/*console.log(result);*/
