@@ -9,7 +9,7 @@ var CampusSchema = new Schema({
 });
 
 var VisitorSchema = new Schema({
-	campusid: String
+	campusId: String
 
 }, {
 	collection: 'visitorrecords'

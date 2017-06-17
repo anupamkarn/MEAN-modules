@@ -52,6 +52,8 @@ var supersecret = 'alliswell';
 var index = require('./login');
 var campus = require('./usercampus').campus;
 var visitor = require('./usercampus').visitor;
+
+
 function validtoken (req, res, next){
 
 	var token = req.body.token || req.param(token) || req.headers['x-access-token'];
@@ -74,29 +76,24 @@ function validtoken (req, res, next){
 				var visitorMantri = 1;
 				
 				var promise = campus.find().exec();
-				promise.then(function(campuses,){
-					visitor.count.exec();
+				promise.then(function(campuses){
+					console.log(campuses);
+					visitor.count().then(function(result) {
+						console.log(result);
+					})
+					 res.json({
+						 result: campuses
+					 })
+					
 					
 					/*console.log(result);*/
 				})
-				.then(forEach(function(visitors){
-	
-					if(visitor.campusid === "5740a2892b22c2a276f7ac28")
-						visitorSMR = visitorSMR + 1;
-					else
-					    visitorMantri = visitorMantri + 1; 
-				}));
 				
-				visitor.find().exec(function(usercount){
-					var count = usercount.lenght;
-					return count
-				})
-				
-				res.json({
-					visitorSMR: visitorSMR,
-					visitorMantri: visitorMantri,
-					users : count
-				});
+				// res.json({
+					// visitorSMR: visitorSMR,
+					// visitorMantri: visitorMantri,
+					// users : count
+				// });
 			
 				};
 		
