@@ -74,22 +74,42 @@ function validtoken (req, res, next){
 				promise.then(function(campuses){
 					var promises1 = [];
 					var promises2 = [];
+					var allPromises = [];
 					// console.log(campuses);
 					_.forEach(campuses, (campus) => {
-						promises.push(visitor.count({campusId: campus._id}));
+						promises1.push(visitor.count({campusId: campus._id}));
+						allPromises.push(visitor.count({campusId: campus._id}));
 					});
 
 					_.forEach(campuses, (campus) => {
 						promises2.push(user.count({'ownership.campusId': campus._id}));	
+						allPromises.push(user.count({'ownership.campusId': campus._id}));	
 					})
-					Promise.all([promises1 , promises2]).then((results1, results2) => {
-						console.log(results);
+					Promise.all(promises1).then((results1) => {
+						console.log(results1);
+						// res.json({
+						// 	result: campuses,
+						// 	countvisitors: results1
+						// })
+					});
+					Promise.all(promises2).then((results2) => {
+						console.log(results2);
+					});
+
+					
+					Promise.all(allPromises).then((results) => {
+						var visitorCounts = _.slice(results, 0, campuses.length);
+						var userCounts = _.slice(results, campuses.length, results.length);
+						console.log(visitorCounts);
+						console.log(userCounts);
 						res.json({
 							result: campuses,
-							countvisitors: results1,
-							countuser: results2
+							userCounts: userCounts,
+							visitorCounts: visitorCounts
 						})
-					})
+					}) 
+					
+					
 					
 					 
 					
