@@ -52,13 +52,14 @@ var supersecret = 'alliswell';
 var index = require('./login');
 var campus = require('./usercampus').campus;
 var visitor = require('./usercampus').visitor;
+var user = require('./usercampus').user;
+var _ = require('lodash');
 function validtoken (req, res, next){
 
 	var token = req.body.token || req.param(token) || req.headers['x-access-token'];
 
 	// res.render(__dirname + '/../view/campuslist.ejs');
 
-	if(token){
 			console.log(token);	
 		jwt.verify(token, supersecret, function(err, decoded){
 			if(err){
@@ -70,14 +71,41 @@ function validtoken (req, res, next){
 			else{
 				req.decded = decoded;
 				console.log('rendering');
-				var visitorSMR = 1;
-				var visitorMantri = 1;
-				
-				var promise = campus.find().exec();
-				promise.then(function(campuses,){
-					visitor.count.exec();
+
+				var promise = campus.find().exec();  //this return promise that's why we dnt need to use promise constructor
+				promise.then(function(campuses){
+					var promises1 = [];
+					var promises2 = [];
+					// console.log(campuses);
 					
-					/*console.log(result);*/
+					_.forEach(campuses, (campus) => {
+						promises1.push(visitor.count({campusId: campus._id}));
+						
+					});
+
+					_.forEach(campuses, (campus) => {
+						promises2.push(users.count({ownership.campusId: campus._id}));
+					});
+					Promise.all([promises1,promises2]).then((result1,result2) => {
+						console.log(result1 + result2);
+						res.json({
+							result: campuses,
+							countvisitor: result1,
+							countusers: result2
+						});
+					});
+
+					});
+			    }
+			});    
+			}
+
+module.exports.validtoken = validtoken;
+				
+				/*var promise = campus.find().exec();
+				promise.then(function(campuses){
+					
+					/*console.log(result);
 				})
 				.then(forEach(function(visitors){
 	
@@ -87,29 +115,17 @@ function validtoken (req, res, next){
 					    visitorMantri = visitorMantri + 1; 
 				}));
 				
-				visitor.find().exec(function(usercount){
-					var count = usercount.lenght;
-					return count
+				visitor.count(function(err,totalusers){
+					return totalusers;
 				})
 				
 				res.json({
 					visitorSMR: visitorSMR,
 					visitorMantri: visitorMantri,
-					users : count
+					users : totalusers
 				});
 			
-				};
-		
-	});
-
-}
-
-}
-
-
-
-
-
+				*/
 
 				/*res.render(__dirname + '/../view/login.ejs');*/
 				/*res.json({
@@ -133,4 +149,4 @@ function validtoken (req, res, next){
   
 
 
-module.exports.validtoken = validtoken;
+

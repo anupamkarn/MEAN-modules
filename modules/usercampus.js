@@ -9,14 +9,22 @@ var CampusSchema = new Schema({
 });
 
 var VisitorSchema = new Schema({
-	campusid: String
+	campusId: {
+		type: mongoose.Schema.Types.ObjectId,
+		require: true,
+		ref: 'Campus'
+	}
 
 }, {
 	collection: 'visitorrecords'
 });
 
 var Users = new Schema({
-	campusid: String
+	campusId: {
+		type:mongoose.Schema.Types.ObjectId,
+		require:true,
+		ref:'Campus'
+	}
 
 }, {
 	collection: 'users'
@@ -40,6 +48,7 @@ var Employee = new Schema({
 module.exports.getcampuslist = getcampuslist;*/
 module.exports = {
 	campus: mongoose.model('campus', CampusSchema),
-	visitor: mongoose.model('visitor', VisitorSchema)	
+	visitor: mongoose.model('visitor', VisitorSchema),
+	user: mongoose.model('user', Users)	
 };
 /*module.exports = mongoose.model('visitor', VisitorSchema);*/
