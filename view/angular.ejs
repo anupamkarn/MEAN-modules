@@ -18,7 +18,7 @@
         </form>
 
         <div ng-repeat="campus in campuses">
-            {{campus.name}}<p> </p> {{campus.count}}
+            {{campus.name}} 
         </div>
     </div>
 
@@ -68,7 +68,6 @@
                             console.log(campusresponse);
                             if (campusresponse && campusresponse.data) {
                                 $scope.campuses = campusresponse.data.result;
-                                $scope.count = campusresponse.data.count;
                             }
                         })
                     }
